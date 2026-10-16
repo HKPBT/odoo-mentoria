@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="aylmer_demo_assets" inherit_id="website.layout" name="Aylmer Repair demo assets">
+        <xpath expr="//head" position="inside">
+            <t t-if="request.httprequest.path.endswith('/aylmer-repair-demo')">
+                <link rel="stylesheet" href="/aylmer_repair_demo/static/src/css/aylmer_demo.css"/>
+                <script type="text/javascript" src="/aylmer_repair_demo/static/src/js/aylmer_demo.js" defer="defer"/>
+            </t>
+        </xpath>
+    </template>
+</odoo>
