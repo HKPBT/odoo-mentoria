@@ -86,38 +86,6 @@ document.querySelector('#advance-flow').addEventListener('click', () => {
 });
 renderScenario('rental');
 
-const equipment = {
-  tiller: { name: 'Motoculteur compact', price: 85 },
-  washer: { name: 'Laveuse à pression', price: 65 }
-};
-let selectedEquipment = 'tiller';
-document.querySelectorAll('.equipment-card').forEach(card => card.addEventListener('click', event => {
-  if (event.target.closest('.availability-dot')) return;
-  document.querySelectorAll('.equipment-card').forEach(item => item.classList.toggle('selected', item === card));
-  selectedEquipment = card.dataset.equipment;
-  document.querySelector('#daily-price').textContent = `${equipment[selectedEquipment].price} $ / jour`;
-  document.querySelector('#rental-result').textContent = '';
-}));
-
-const today = new Date();
-const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
-document.querySelector('#start-date').min = localDate;
-document.querySelector('#end-date').min = localDate;
-document.querySelector('#start-date').addEventListener('change', event => {
-  document.querySelector('#end-date').min = event.target.value;
-  if (document.querySelector('#end-date').value < event.target.value) document.querySelector('#end-date').value = event.target.value;
-});
-document.querySelector('#check-rental').addEventListener('click', () => {
-  const start = document.querySelector('#start-date').value;
-  const end = document.querySelector('#end-date').value;
-  const result = document.querySelector('#rental-result');
-  if (!start || !end) { result.textContent = 'Choisissez une date de départ et une date de retour.'; return; }
-  if (end < start) { result.textContent = 'La date de retour doit être égale ou postérieure au départ.'; return; }
-  const days = Math.max(1, Math.round((new Date(end) - new Date(start)) / 86400000) + 1);
-  const total = days * equipment[selectedEquipment].price;
-  result.textContent = `${equipment[selectedEquipment].name} · ${days} jour${days > 1 ? 's' : ''} · ${total} $ estimés. Disponibilité à confirmer avec l’équipe.`;
-});
-
 const menuToggle = document.querySelector('.menu-toggle');
 menuToggle.addEventListener('click', () => {
   const nav = document.querySelector('#main-nav');

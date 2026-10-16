@@ -6,6 +6,9 @@
                 <link rel="stylesheet" href="/aylmer_repair_demo/static/src/css/aylmer_demo.css"/>
                 <script type="text/javascript" src="/aylmer_repair_demo/static/src/js/aylmer_demo.js" defer="defer"/>
             </t>
+            <t t-if="request.httprequest.path.rstrip('/').endswith('/shop') or '/shop/' in request.httprequest.path">
+                <link rel="stylesheet" href="/aylmer_repair_demo/static/src/css/website_shop.css"/>
+            </t>
         </xpath>
     </template>
 </odoo>

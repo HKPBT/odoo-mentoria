@@ -6,3 +6,21 @@
 .reveal{opacity:0;transform:translateY(12px);transition:opacity .55s ease,transform .55s ease}.reveal.in-view{opacity:1;transform:translateY(0)}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}.reveal{opacity:1;transform:none}}
 body:has(#aylmer-demo-root) #top,body:has(#aylmer-demo-root) #bottom{display:none!important}body:has(#aylmer-demo-root) #wrapwrap{padding-top:0!important}#aylmer-demo-root{width:100%}
+
+.product-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.catalog-product-card{min-width:0;background:#fff;border:1px solid var(--line)}
+.catalog-product-image{position:relative;display:grid;place-items:center;height:230px;overflow:hidden;background:#ebeae4}
+.catalog-product-image img{width:100%;height:100%;object-fit:cover;transition:transform .35s}
+.catalog-product-image:hover img{transform:scale(1.035)}
+.catalog-product-image .shop-badge{position:absolute;top:12px;left:12px;padding:6px 9px;background:#f4f4efed;font-size:7px;letter-spacing:.1em}
+.catalog-image-placeholder{font-family:var(--display);font-size:12px;font-weight:800;letter-spacing:.12em;color:#7b827e}
+.catalog-product-info{display:grid;gap:10px;padding:17px}
+.catalog-product-info>small{font-size:7px;letter-spacing:.12em;color:#81898a}
+.catalog-product-info h3{min-height:42px;margin:0;font-family:var(--display);font-size:17px;line-height:1.25;letter-spacing:-.035em}
+.catalog-product-info .text-link{width:max-content}
+.catalog-empty{min-height:172px;grid-column:1/-1;display:flex;align-items:flex-start;justify-content:center;flex-direction:column;gap:11px;padding:25px;background:#fff;border:1px solid var(--line)}
+.catalog-empty b{font-family:var(--display);font-size:17px}
+.catalog-empty>span{font-size:11px;color:var(--ink-soft)}
+.native-flow-note{margin-top:13px;padding:12px 15px;border-left:2px solid var(--orange-dark);background:#fff;font-size:10px;color:var(--ink-soft)}
+.repair-request-link{margin-left:18px}
+@media(max-width:760px){.product-cards{grid-template-columns:1fr;gap:10px}.catalog-product-image{height:195px}.catalog-product-info h3{min-height:0}.repair-request-link{margin:12px 0 0}}

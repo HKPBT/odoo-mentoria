@@ -1,0 +1,94 @@
+/* Brand the standard Odoo shop while leaving Odoo's cart, checkout and booking logic intact. */
+body:has(.o_wsale_products_page),
+body:has(.o_wsale_product_page),
+body:has(.oe_website_sale) {
+  --aylmer-ink: #1c2022;
+  --aylmer-paper: #f5f4ef;
+  --aylmer-orange: #f5a623;
+  --aylmer-line: #deded8;
+  background: var(--aylmer-paper);
+  color: var(--aylmer-ink);
+}
+
+body:has(.o_wsale_products_page) #wrapwrap,
+body:has(.o_wsale_product_page) #wrapwrap,
+body:has(.oe_website_sale) #wrapwrap {
+  background: var(--aylmer-paper);
+}
+
+body:has(.o_wsale_products_page) h1,
+body:has(.o_wsale_product_page) h1,
+body:has(.oe_website_sale) h1 {
+  color: var(--aylmer-ink);
+  font-family: Manrope, "DM Sans", Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: -.045em;
+}
+
+body:has(.o_wsale_products_page) .oe_product_cart,
+body:has(.o_wsale_products_page) .o_wsale_product_information,
+body:has(.o_wsale_product_page) .o_wsale_product_page .product_detail_img {
+  border-color: var(--aylmer-line);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+body:has(.o_wsale_products_page) .oe_product_cart {
+  background: #fff;
+}
+
+body:has(.o_wsale_products_page) .oe_product_cart .oe_product_image,
+body:has(.o_wsale_products_page) .oe_product_cart img {
+  background-color: #ebeae4;
+}
+
+body:has(.o_wsale_products_page) .oe_product_cart .o_wsale_product_information,
+body:has(.o_wsale_products_page) .oe_product_cart .o_wsale_product_btn {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+body:has(.o_wsale_products_page) .btn-primary,
+body:has(.o_wsale_product_page) .btn-primary,
+body:has(.oe_website_sale) .btn-primary {
+  border-color: var(--aylmer-ink);
+  border-radius: 0;
+  background: var(--aylmer-ink);
+  color: #fff;
+}
+
+body:has(.o_wsale_products_page) .btn-primary:hover,
+body:has(.o_wsale_product_page) .btn-primary:hover,
+body:has(.oe_website_sale) .btn-primary:hover {
+  border-color: #343b3d;
+  background: #343b3d;
+}
+
+body:has(.o_wsale_products_page) .btn-outline-primary,
+body:has(.o_wsale_product_page) .btn-outline-primary,
+body:has(.oe_website_sale) .btn-outline-primary {
+  border-color: var(--aylmer-ink);
+  border-radius: 0;
+  color: var(--aylmer-ink);
+}
+
+body:has(.o_wsale_products_page) a:not(.btn),
+body:has(.o_wsale_product_page) a:not(.btn),
+body:has(.oe_website_sale) a:not(.btn) {
+  text-decoration-color: var(--aylmer-orange);
+}
+
+body:has(.o_wsale_products_page) .form-control,
+body:has(.o_wsale_product_page) .form-control,
+body:has(.oe_website_sale) .form-control {
+  border-color: var(--aylmer-line);
+  border-radius: 0;
+}
+
+@media (max-width: 767.98px) {
+  body:has(.o_wsale_products_page) .oe_product_cart .o_wsale_product_information,
+  body:has(.o_wsale_products_page) .oe_product_cart .o_wsale_product_btn {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
