@@ -1,7 +1,7 @@
 {
     "name": "Aylmer Repair Demo Website",
     "summary": "Site de démonstration Aylmer Repair intégré à Odoo Website",
-    "version": "20.0.1.0.0",
+    "version": "20.0.1.0.1",
     "category": "Website/Website",
     "license": "LGPL-3",
     "depends": ["website"],
@@ -11,5 +11,5 @@
         "views/website_menu.xml",
     ],
     "installable": True,
-    "application": False,
+    "application": True,
 }
