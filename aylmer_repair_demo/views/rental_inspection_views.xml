@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_aylmer_rental_inspection_list" model="ir.ui.view">
+        <field name="name">aylmer.rental.inspection.list</field>
+        <field name="model">aylmer.rental.inspection</field>
+        <field name="arch" type="xml">
+            <list string="Contrôles de location" decoration-success="state == 'done'">
+                <field name="name"/>
+                <field name="inspection_date"/>
+                <field name="phase"/>
+                <field name="rental_order_id"/>
+                <field name="customer_id"/>
+                <field name="product_id"/>
+                <field name="serial_id" optional="show"/>
+                <field name="damage_found"/>
+                <field name="repair_id" optional="show"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_aylmer_rental_inspection_form" model="ir.ui.view">
+        <field name="name">aylmer.rental.inspection.form</field>
+        <field name="model">aylmer.rental.inspection</field>
+        <field name="arch" type="xml">
+            <form string="Fiche de contrôle du matériel">
+                <header>
+                    <button name="action_validate" type="object" string="Valider le contrôle" class="btn-primary" invisible="state == 'done'"/>
+                    <button name="action_reset_to_draft" type="object" string="Remettre en brouillon" invisible="state != 'done'"/>
+                    <button name="action_create_repair" type="object" string="Créer l’ordre de réparation" class="btn-secondary" groups="stock.group_stock_user" invisible="phase != 'return' or not damage_found"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_create_repair" type="object" class="oe_stat_button" icon="fa-wrench" groups="stock.group_stock_user" invisible="not repair_id">
+                            <span class="o_stat_text">Ouvrir l’ordre de réparation</span>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Location">
+                            <field name="phase"/>
+                            <field name="rental_order_id"/>
+                            <field name="customer_id"/>
+                            <field name="rental_order_line_id" domain="[('order_id', '=', rental_order_id), ('product_id.product_tmpl_id.rent_ok', '=', True)]"/>
+                            <field name="product_id"/>
+                            <field name="serial_id"/>
+                            <field name="return_picking_id" invisible="phase != 'return'"/>
+                        </group>
+                        <group string="Responsable et date">
+                            <field name="inspection_date"/>
+                            <field name="inspector_id"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="repair_id" invisible="not repair_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="État et checklist">
+                            <group>
+                                <group string="Vérifications">
+                                    <field name="visual_condition_ok"/>
+                                    <field name="starts_ok"/>
+                                    <field name="safety_ok"/>
+                                    <field name="accessories_ok"/>
+                                    <field name="clean_ok"/>
+                                </group>
+                                <group string="Mesures">
+                                    <field name="fuel_level"/>
+                                    <field name="meter_reading"/>
+                                    <field name="damage_found"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="damage_notes" placeholder="Décrivez l’état, les dommages ou les pièces/accessoires manquants..."/>
+                            </group>
+                            <group string="Photos">
+                                <field name="photo_ids" widget="many2many_binary" string="Ajouter des photos"/>
+                            </group>
+                        </page>
+                        <page string="Signatures">
+                            <group>
+                                <field name="customer_signature" widget="signature"/>
+                                <field name="inspector_signature" widget="signature"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_aylmer_rental_inspection_search" model="ir.ui.view">
+        <field name="name">aylmer.rental.inspection.search</field>
+        <field name="model">aylmer.rental.inspection</field>
+        <field name="arch" type="xml">
+            <search string="Contrôles de location">
+                <field name="name"/>
+                <field name="rental_order_id"/>
+                <field name="customer_id"/>
+                <field name="product_id"/>
+                <filter name="pickup" string="Sorties" domain="[('phase', '=', 'pickup')]"/>
+                <filter name="returns" string="Retours" domain="[('phase', '=', 'return')]"/>
+                <filter name="damages" string="Dommages constatés" domain="[('damage_found', '=', True)]"/>
+                <filter name="to_complete" string="À compléter" domain="[('state', '=', 'draft')]"/>
+                <group expand="0" string="Regrouper par">
+                    <filter name="group_phase" string="Étape" context="{'group_by': 'phase'}"/>
+                    <filter name="group_customer" string="Client" context="{'group_by': 'customer_id'}"/>
+                    <filter name="group_date" string="Date" context="{'group_by': 'inspection_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_aylmer_rental_inspections" model="ir.actions.act_window">
+        <field name="name">Contrôles de location</field>
+        <field name="res_model">aylmer.rental.inspection</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_aylmer_rental_inspection_search"/>
+        <field name="context">{'search_default_to_complete': 0}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Créez une fiche à la remise ou au retour d’un équipement.</p>
+            <p>Vous pouvez ouvrir une fiche depuis la commande de location du client.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_aylmer_rental_inspections" name="Contrôles de location" parent="sale.menu_sale_root" action="action_aylmer_rental_inspections" sequence="65" groups="sales_team.group_sale_salesman,stock.group_stock_user"/>
+
+    <record id="view_sale_order_form_rental_inspection" model="ir.ui.view">
+        <field name="name">sale.order.form.aylmer.rental.inspection</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_new_pickup_inspection" type="object" string="Contrôle de sortie" class="btn-secondary" groups="sales_team.group_sale_salesman" invisible="state not in ('sale', 'done')"/>
+                <button name="action_new_return_inspection" type="object" string="Contrôle de retour" class="btn-secondary" groups="sales_team.group_sale_salesman" invisible="state not in ('sale', 'done')"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Contrôles de matériel" name="aylmer_rental_inspections" groups="sales_team.group_sale_salesman">
+                    <field name="aylmer_inspection_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="inspection_date"/>
+                            <field name="phase"/>
+                            <field name="product_id"/>
+                            <field name="serial_id"/>
+                            <field name="damage_found"/>
+                            <field name="repair_id"/>
+                            <field name="state" widget="badge"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -13,6 +13,10 @@ The addon depends on Website eCommerce (`website_sale`), Rental (`sale_renting`)
 3. Enable CAD in currencies, create/select the CAD pricelist for the website, and configure taxes and payment providers as required. The website uses Odoo's current website pricelist; the addon does not change company currency or payment settings.
 4. In **Appointments**, create and publish a repair appointment type with the correct staff/resources and availability. The landing page links to the first published appointment type.
 5. In **Helpdesk**, enable the Website Form on the repair team and set the website contact form's action/team to create Helpdesk tickets. Enable Repairs for that team. The standard `/contactus` form can then receive repair requests; staff can turn a ticket into a Repair Order from Helpdesk.
+6. On a confirmed rental order, use **Contrôle de sortie** when handing over the equipment and **Contrôle de retour** when it comes back. Complete the condition checklist, fuel level, meter reading, photos and customer/technician signatures. Select the rented product line and serial number when applicable.
+7. For a repair identified at return, first validate the equipment return in Odoo Inventory, then select that return transfer on the return inspection. Mark the damage and use **Créer l’ordre de réparation**. Odoo creates a native Repair Order from the returned product transfer, so its customer, equipment, serial number and rental order stay traceable.
+
+The separate **Contrôles de location** menu in Sales also gives staff a list of all handover and return forms. Sales users can create and edit inspection forms; deletion is reserved for Sales Managers.
 
 The `La démo Odoo` process panel remains a clearly labeled illustration. It does not create test transactions. All product browsing, sales orders, rental orders, date availability and appointment bookings use Odoo records and flows.
 
